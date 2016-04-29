@@ -31,7 +31,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Lwo-zE-MT1">
-                        <barButtonItem key="leftBarButtonItem" title="New Game" id="xpf-Pa-n9q"/>
+                        <barButtonItem key="leftBarButtonItem" title="New Game" id="xpf-Pa-n9q">
+                            <connections>
+                                <action selector="NewGame:" destination="BYZ-38-t0r" id="yiQ-UT-XOd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

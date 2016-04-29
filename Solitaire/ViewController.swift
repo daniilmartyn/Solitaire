@@ -21,5 +21,8 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func NewGame(sender: AnyObject) {
+        NSLog("Start New Game")
+    }
 }
 
