@@ -36,4 +36,30 @@ struct Card : Hashable {
         suit = s;
         rank = r;
     }
+    
+    static func deck() -> [Card] {
+        var deck : [Card] = []
+        for suit in 0 ... 3  {
+            for rank in 1 ... 13 {
+                
+                var newCard : Card?
+                
+                switch suit {
+                case 0:
+                    newCard = Card(suit: .SPADES, rank: UInt8(rank))
+                case 1:
+                    newCard = Card(suit: .CLUBS, rank: UInt8(rank))
+                case 2:
+                    newCard = Card(suit: .DIAMONDS, rank: UInt8(rank))
+                case 3:
+                    newCard = Card(suit: .HEARTS, rank: UInt8(rank))
+                default:
+                    break;
+                }
+                
+                deck.append(newCard!)
+            }
+        }
+        return deck
+    }
 }

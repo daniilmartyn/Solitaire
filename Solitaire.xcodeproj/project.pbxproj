@@ -14,14 +14,10 @@
 		89300A0D1CC58C5F00691102 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89300A0B1CC58C5F00691102 /* LaunchScreen.storyboard */; };
 		89300A181CC58C5F00691102 /* SolitaireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89300A171CC58C5F00691102 /* SolitaireTests.swift */; };
 		89300A231CC58C5F00691102 /* SolitaireUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89300A221CC58C5F00691102 /* SolitaireUITests.swift */; };
+		897AD46D1CD5342F00BC8737 /* SolitaireView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897AD46C1CD5342F00BC8737 /* SolitaireView.swift */; };
+		897AD46F1CD54ED600BC8737 /* CardLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897AD46E1CD54ED600BC8737 /* CardLayer.swift */; };
 		899CE7311CD40470009659FA /* back-blue-150-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F31CD40470009659FA /* back-blue-150-1.png */; };
-		899CE7321CD40470009659FA /* back-blue-150-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F41CD40470009659FA /* back-blue-150-2.png */; };
-		899CE7331CD40470009659FA /* back-blue-150-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F51CD40470009659FA /* back-blue-150-3.png */; };
-		899CE7341CD40470009659FA /* back-blue-150-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F61CD40470009659FA /* back-blue-150-4.png */; };
 		899CE7351CD40470009659FA /* back-red-150-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F71CD40470009659FA /* back-red-150-1.png */; };
-		899CE7361CD40470009659FA /* back-red-150-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F81CD40470009659FA /* back-red-150-2.png */; };
-		899CE7371CD40470009659FA /* back-red-150-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6F91CD40470009659FA /* back-red-150-3.png */; };
-		899CE7381CD40470009659FA /* back-red-150-4.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6FA1CD40470009659FA /* back-red-150-4.png */; };
 		899CE7391CD40470009659FA /* clubs-2-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6FB1CD40470009659FA /* clubs-2-150.png */; };
 		899CE73A1CD40470009659FA /* clubs-3-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6FC1CD40470009659FA /* clubs-3-150.png */; };
 		899CE73B1CD40470009659FA /* clubs-4-150.png in Resources */ = {isa = PBXBuildFile; fileRef = 899CE6FD1CD40470009659FA /* clubs-4-150.png */; };
@@ -111,14 +107,10 @@
 		89300A1E1CC58C5F00691102 /* SolitaireUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SolitaireUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		89300A221CC58C5F00691102 /* SolitaireUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolitaireUITests.swift; sourceTree = "<group>"; };
 		89300A241CC58C5F00691102 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		897AD46C1CD5342F00BC8737 /* SolitaireView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SolitaireView.swift; sourceTree = SOURCE_ROOT; };
+		897AD46E1CD54ED600BC8737 /* CardLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardLayer.swift; sourceTree = "<group>"; };
 		899CE6F31CD40470009659FA /* back-blue-150-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-blue-150-1.png"; sourceTree = "<group>"; };
-		899CE6F41CD40470009659FA /* back-blue-150-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-blue-150-2.png"; sourceTree = "<group>"; };
-		899CE6F51CD40470009659FA /* back-blue-150-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-blue-150-3.png"; sourceTree = "<group>"; };
-		899CE6F61CD40470009659FA /* back-blue-150-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-blue-150-4.png"; sourceTree = "<group>"; };
 		899CE6F71CD40470009659FA /* back-red-150-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-red-150-1.png"; sourceTree = "<group>"; };
-		899CE6F81CD40470009659FA /* back-red-150-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-red-150-2.png"; sourceTree = "<group>"; };
-		899CE6F91CD40470009659FA /* back-red-150-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-red-150-3.png"; sourceTree = "<group>"; };
-		899CE6FA1CD40470009659FA /* back-red-150-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-red-150-4.png"; sourceTree = "<group>"; };
 		899CE6FB1CD40470009659FA /* clubs-2-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clubs-2-150.png"; sourceTree = "<group>"; };
 		899CE6FC1CD40470009659FA /* clubs-3-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clubs-3-150.png"; sourceTree = "<group>"; };
 		899CE6FD1CD40470009659FA /* clubs-4-150.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clubs-4-150.png"; sourceTree = "<group>"; };
@@ -229,6 +221,8 @@
 				89300A021CC58C5F00691102 /* AppDelegate.swift */,
 				89300A041CC58C5F00691102 /* ViewController.swift */,
 				899CE76F1CD40CA6009659FA /* Solitaire.swift */,
+				897AD46C1CD5342F00BC8737 /* SolitaireView.swift */,
+				897AD46E1CD54ED600BC8737 /* CardLayer.swift */,
 				899CE7711CD40CBA009659FA /* Card.swift */,
 				89300A061CC58C5F00691102 /* Main.storyboard */,
 				89300A091CC58C5F00691102 /* Assets.xcassets */,
@@ -260,13 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				899CE6F31CD40470009659FA /* back-blue-150-1.png */,
-				899CE6F41CD40470009659FA /* back-blue-150-2.png */,
-				899CE6F51CD40470009659FA /* back-blue-150-3.png */,
-				899CE6F61CD40470009659FA /* back-blue-150-4.png */,
 				899CE6F71CD40470009659FA /* back-red-150-1.png */,
-				899CE6F81CD40470009659FA /* back-red-150-2.png */,
-				899CE6F91CD40470009659FA /* back-red-150-3.png */,
-				899CE6FA1CD40470009659FA /* back-red-150-4.png */,
 				899CE6FB1CD40470009659FA /* clubs-2-150.png */,
 				899CE6FC1CD40470009659FA /* clubs-3-150.png */,
 				899CE6FD1CD40470009659FA /* clubs-4-150.png */,
@@ -430,7 +418,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				899CE7671CD40470009659FA /* spades-7-150.png in Resources */,
-				899CE7341CD40470009659FA /* back-blue-150-4.png in Resources */,
 				899CE7581CD40470009659FA /* hearts-7-150.png in Resources */,
 				899CE73D1CD40470009659FA /* clubs-6-150.png in Resources */,
 				899CE7401CD40470009659FA /* clubs-9-150.png in Resources */,
@@ -440,7 +427,6 @@
 				899CE73E1CD40470009659FA /* clubs-7-150.png in Resources */,
 				899CE73C1CD40470009659FA /* clubs-5-150.png in Resources */,
 				899CE7471CD40470009659FA /* diamonds-3-150.png in Resources */,
-				899CE7321CD40470009659FA /* back-blue-150-2.png in Resources */,
 				899CE7491CD40470009659FA /* diamonds-5-150.png in Resources */,
 				899CE7501CD40470009659FA /* diamonds-j-150.png in Resources */,
 				899CE73A1CD40470009659FA /* clubs-3-150.png in Resources */,
@@ -451,13 +437,11 @@
 				899CE7561CD40470009659FA /* hearts-5-150.png in Resources */,
 				899CE7551CD40470009659FA /* hearts-4-150.png in Resources */,
 				899CE7591CD40470009659FA /* hearts-8-150.png in Resources */,
-				899CE7361CD40470009659FA /* back-red-150-2.png in Resources */,
 				899CE7411CD40470009659FA /* clubs-10-150.png in Resources */,
 				899CE7311CD40470009659FA /* back-blue-150-1.png in Resources */,
 				899CE7391CD40470009659FA /* clubs-2-150.png in Resources */,
 				899CE7651CD40470009659FA /* spades-5-150.png in Resources */,
 				899CE74B1CD40470009659FA /* diamonds-7-150.png in Resources */,
-				899CE7331CD40470009659FA /* back-blue-150-3.png in Resources */,
 				899CE76C1CD40470009659FA /* spades-j-150.png in Resources */,
 				899CE76D1CD40470009659FA /* spades-k-150.png in Resources */,
 				899CE76E1CD40470009659FA /* spades-q-150.png in Resources */,
@@ -467,7 +451,6 @@
 				899CE7521CD40470009659FA /* diamonds-q-150.png in Resources */,
 				899CE7641CD40470009659FA /* spades-4-150.png in Resources */,
 				899CE75A1CD40470009659FA /* hearts-9-150.png in Resources */,
-				899CE7371CD40470009659FA /* back-red-150-3.png in Resources */,
 				899CE7461CD40470009659FA /* diamonds-2-150.png in Resources */,
 				899CE7431CD40470009659FA /* clubs-j-150.png in Resources */,
 				899CE7541CD40470009659FA /* hearts-3-150.png in Resources */,
@@ -478,7 +461,6 @@
 				899CE7351CD40470009659FA /* back-red-150-1.png in Resources */,
 				899CE74E1CD40470009659FA /* diamonds-10-150.png in Resources */,
 				899CE7631CD40470009659FA /* spades-3-150.png in Resources */,
-				899CE7381CD40470009659FA /* back-red-150-4.png in Resources */,
 				899CE7441CD40470009659FA /* clubs-k-150.png in Resources */,
 				899CE7601CD40470009659FA /* joker-b-150.png in Resources */,
 				899CE7531CD40470009659FA /* hearts-2-150.png in Resources */,
@@ -518,8 +500,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				897AD46D1CD5342F00BC8737 /* SolitaireView.swift in Sources */,
 				89300A051CC58C5F00691102 /* ViewController.swift in Sources */,
 				899CE7701CD40CA6009659FA /* Solitaire.swift in Sources */,
+				897AD46F1CD54ED600BC8737 /* CardLayer.swift in Sources */,
 				89300A031CC58C5F00691102 /* AppDelegate.swift in Sources */,
 				899CE7721CD40CBA009659FA /* Card.swift in Sources */,
 			);
