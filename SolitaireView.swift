@@ -40,7 +40,30 @@ class SolitaireView: UIView {
             UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
         self.layer.addSublayer(stockLayer)
         
-        // XXXXXX add more layers and stuff ehrererererere
+        
+        wasteLayer = CALayer()
+        wasteLayer.name = "waste"
+        wasteLayer.backgroundColor =
+            UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+        self.layer.addSublayer(wasteLayer)
+        
+        for _ in 0 ..< 4 {
+            let foundationLayer = CALayer()
+            foundationLayer.name = "foundation"
+            foundationLayer.backgroundColor =
+                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+            self.layer.addSublayer(foundationLayer)
+            foundationLayers.append(foundationLayer)
+        }
+        
+        for _ in 0 ..< 7 {
+            let tableauLayer = CALayer()
+            tableauLayer.name = "tableau"
+            tableauLayer.backgroundColor =
+                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+            self.layer.addSublayer(tableauLayer)
+            tableauLayers.append(tableauLayer)
+        }
         
         let deck = Card.deck()  // deck of poker cards
         cardToLayerDictionary = [:]
