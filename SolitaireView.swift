@@ -148,10 +148,10 @@ class SolitaireView: UIView {
         }
         
         let foundation = solitaire.foundation
-        for stack in foundation {
-            for card in stack {
+        for i in 0 ..< 4 {
+            for card in foundation[i] {
                 let cardLayer = cardToLayerDictionary[card]!
-                cardLayer.frame = foundationLayers[0].frame
+                cardLayer.frame = foundationLayers[i].frame
                 cardLayer.faceUp = solitaire.isCardFaceUp(card)
                 cardLayer.zPosition = z++
             }
@@ -220,7 +220,21 @@ class SolitaireView: UIView {
                 let cardLayer = layer as! CardLayer
                 let card = cardLayer.card
                 if solitaire.isCardFaceUp(card) {
-                    /// if tap count is > 1 move to foundation if allowed...
+                    if touch.tapCount > 1 {
+                        for i in 0 ..< 4 {
+                            if solitaire.canDropCard(card, onFoundation: i){
+                                solitaire.didDropCard(card, onFoundation: i)
+                                CATransaction.begin()
+                                CATransaction.setDisableActions(true)
+                                cardLayer.zPosition = topZPosition + 1
+                                CATransaction.commit()
+                                cardLayer.position = foundationLayers[i].position
+                                
+                                layoutSublayersOfLayer(self.layer)
+                                break
+                            }
+                        }
+                    }
                     /// else initiate drag of card or stack of cards by setting draggingCardLayer,
                     /// and (possibly) draggingFan...
                 } else if solitaire.canFlipCard(card) {

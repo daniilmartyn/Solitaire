@@ -51,7 +51,7 @@ class Solitaire {
     func freshGame(){
         stock = Card.deck()
         shuffle()
-        waste = []              // waste has nothing
+        waste.removeAll()             // waste has nothing
         faceUpCards.removeAll()
         
         for index in 0 ..< foundation.count {
@@ -102,11 +102,34 @@ class Solitaire {
     }
     
     func canDropCard(card : Card, onFoundation i : Int) -> Bool {
+        
+        if foundation[i].isEmpty && card.rank == ACE {
+            return true
+        } else if foundation[i].last?.suit == card.suit && foundation[i].last!.rank == card.rank-1 { 
+            return true
+        }
+        
         return false
+        
     }
     
     func didDropCard(card: Card, onFoundation i : Int) {
+        if waste.contains(card) {
+            waste.removeAtIndex(waste.indexOf(card)!)
+        }
         
+        for i in 0 ..< 7 {
+            if tableau[i].contains(card) {
+                tableau[i].removeAtIndex(tableau[i].indexOf(card)!)
+                if !tableau[i].isEmpty{
+                    faceUpCards.insert(tableau[i].last!)
+                }
+                break
+            }
+        }
+        
+        
+        foundation[i].append(card)
     }
     
     func canDropCard(card : Card, onTableau i : Int) -> Bool {
@@ -118,6 +141,11 @@ class Solitaire {
     }
     
     func canFlipCard(card : Card) -> Bool {
+        if card == stock.last {
+            return true
+        }
+        
+        
         return false
     }
     
