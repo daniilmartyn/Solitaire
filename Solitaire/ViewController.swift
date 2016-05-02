@@ -10,6 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    lazy var solitaire : Solitaire! = { // reference to model in app delegate
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate.solitaire
+    }()
+    
+    
+    @IBOutlet weak var solitaireTable: SolitaireView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -22,7 +30,8 @@ class ViewController: UIViewController {
 
 
     @IBAction func NewGame(sender: AnyObject) {
-        NSLog("Start New Game")
+        solitaire.freshGame()
+        self.solitaireTable.layoutSublayersOfLayer(solitaireTable.layer)
     }
 }
 

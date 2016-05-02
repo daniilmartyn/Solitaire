@@ -8,6 +8,21 @@
 
 import UIKit
 
+func imageForCard(card : Card) -> UIImage {
+    
+    let suits = ["spades", "clubs", "diamonds", "hearts"]
+    let ranks = [
+        "",
+        "a", "2", "3", "4", "5", "6", "7",
+        "8", "9", "10", "j", "q", "k"]
+    
+    let cardRank : Int = Int(card.rank)
+    let cardSuit : Int = Int(card.suit.rawValue)
+    
+    let imageName = "\(suits[cardSuit])-\(ranks[cardRank])-150"
+    return UIImage(named: imageName)!
+}
+
 class CardLayer: CALayer {
 
     let card : Card
@@ -19,36 +34,31 @@ class CardLayer: CALayer {
             }
         }
     }
-    var frontImage : UIImage
+    let frontImage : UIImage
     static let backImage = UIImage(named: "back-blue-150-1.png")
     
     init(card : Card) {
         self.card = card
         faceUp = true
-        frontImage = UIImage()
+        frontImage = imageForCard(card)
         super.init()
-        frontImage = imageForCard(card)  // load associated image from main bundle
         self.contents = frontImage.CGImage
         self.contentsGravity = kCAGravityResizeAspect
     }
 
+    override init(layer: AnyObject) {
+        self.card = Card(suit: .SPADES, rank: 2)
+        self.faceUp = false
+        self.frontImage = UIImage()
+        super.init(layer: layer)
+    }
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.card = Card(suit: .SPADES, rank: 2)
+        self.faceUp = false
+        self.frontImage = UIImage()
+        super.init(coder: aDecoder)
     }
     
-    func imageForCard(card : Card) -> UIImage {
-        
-        let suits = ["spades", "clubs", "diamonds", "hearts"]
-        let ranks = [
-            "",
-            "a", "2", "3", "4", "5", "6", "7",
-            "8", "9", "10", "j", "q", "k"]
-        
-        let cardRank : Int = Int(card.rank)
-        let cardSuit : Int = Int(card.suit.rawValue)
-        
-        let imageName = "\(suits[cardSuit])-\(ranks[cardRank])-150"
-        return UIImage(named: imageName)!
-    }
+    
 
 }

@@ -21,8 +21,8 @@ class Solitaire {
     init(){
         stock = []
         waste = []
-        foundation = [[]]
-        tableau = [[]]
+        foundation = [[],[],[],[]]
+        tableau = [[],[],[],[],[],[],[]]
         
         faceUpCards = Set()
         
@@ -33,9 +33,9 @@ class Solitaire {
         
         for _ in 0 ..< 5 {          // shuffle 5 times
             for j in 0 ..< 52 {     // go through every card
-                var randomInt = Int(arc4random() % 52)   // pick a random location in deck
+                var randomInt = Int(arc4random_uniform(52))   // pick a random location in deck
                 while randomInt == j {              // if picks same number as j, pick again
-                    randomInt = Int(arc4random() % 52)
+                    randomInt = Int(arc4random_uniform(52))
                 }
                 
                 
@@ -52,7 +52,15 @@ class Solitaire {
         stock = Card.deck()
         shuffle()
         waste = []              // waste has nothing
-        foundation = [[]]       // foundation has nothing
+        faceUpCards.removeAll()
+        
+        for index in 0 ..< foundation.count {
+            foundation[index].removeAll()
+        }
+        
+        for index in 0 ..< tableau.count {
+            tableau[index].removeAll()
+        }
         
         // deal cards from stock to tableau and update faceUpCards set
         

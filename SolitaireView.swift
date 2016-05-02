@@ -8,7 +8,7 @@
 
 import UIKit
 
-let FAN_OFFSET : CGFloat = 3.0
+var FAN_OFFSET : CGFloat = 0.0
 
 class SolitaireView: UIView {
 
@@ -37,30 +37,32 @@ class SolitaireView: UIView {
         stockLayer = CALayer()
         stockLayer.name = "stock"
         stockLayer.backgroundColor =
-            UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+            UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.1, alpha: 0.3).CGColor
         self.layer.addSublayer(stockLayer)
         
         
         wasteLayer = CALayer()
         wasteLayer.name = "waste"
         wasteLayer.backgroundColor =
-            UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+            UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.1, alpha: 0.3).CGColor
         self.layer.addSublayer(wasteLayer)
         
+        foundationLayers = []
         for _ in 0 ..< 4 {
             let foundationLayer = CALayer()
             foundationLayer.name = "foundation"
             foundationLayer.backgroundColor =
-                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.1, alpha: 0.3).CGColor
             self.layer.addSublayer(foundationLayer)
             foundationLayers.append(foundationLayer)
         }
         
+        tableauLayers = []
         for _ in 0 ..< 7 {
             let tableauLayer = CALayer()
             tableauLayer.name = "tableau"
             tableauLayer.backgroundColor =
-                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.0, alpha: 0.3).CGColor
+                UIColor(colorLiteralRed: 0.0, green: 0.5, blue: 0.1, alpha: 0.3).CGColor
             self.layer.addSublayer(tableauLayer)
             tableauLayers.append(tableauLayer)
         }
@@ -84,12 +86,42 @@ class SolitaireView: UIView {
         let width = bounds.size.width
         let height = bounds.size.height
         let portrait = width < height
+        var boarder : CGFloat
         
-        // determine size and positiong of stock, waste, foundation and tableau layers..
-        ///
-        //
-        //
-        //
+        if portrait {
+            boarder = 8.0     // space between cards/layers
+            FAN_OFFSET = 0.2
+            
+        } else {
+            boarder = 16.0
+            FAN_OFFSET = 0.1
+        }
+
+        let ratio : CGFloat = 215/150   // will be used to calculate height of card
+        
+        let w = (width - 8*boarder)/7
+        let h = w*ratio
+        
+        
+        stockLayer.bounds = CGRectMake(0, 0, w, h)
+        stockLayer.position = CGPointMake(boarder + w/2, boarder + h/2)
+        
+        wasteLayer.bounds = CGRectMake(0, 0, w, h)
+        wasteLayer.position = CGPointMake(2*boarder + w + w/2, boarder + h/2)
+        
+        for i in 0 ..< 4 {
+            foundationLayers[i].bounds = CGRectMake(0,0,w,h)
+            foundationLayers[i].position = CGPointMake(
+                3*w + 4*boarder + w * CGFloat(i) + boarder * CGFloat(i) + w/2,
+                boarder + h/2)
+        }
+        
+        for i in 0 ..< 7 {
+            tableauLayers[i].bounds = CGRectMake(0,0,w,h)
+            tableauLayers[i].position = CGPointMake(
+                CGFloat(i)*w + boarder + boarder*CGFloat(i) + w/2,
+                2*boarder + h + h/2)
+        }
         
         layoutCards()
     }
@@ -105,12 +137,25 @@ class SolitaireView: UIView {
             cardLayer.zPosition = z++
         }
         
-        //
-        //
-        //  layout the cards in waste and foundation stacks...kfjasdlkfjsa;ldf
-        //
-        //
-        //
+        //  layout the cards in waste and foundation stacks...
+        
+        let waste = solitaire.waste
+        for card in waste {
+            let cardLayer = cardToLayerDictionary[card]!
+            cardLayer.frame = wasteLayer.frame
+            cardLayer.faceUp = solitaire.isCardFaceUp(card)
+            cardLayer.zPosition = z++
+        }
+        
+        let foundation = solitaire.foundation
+        for stack in foundation {
+            for card in stack {
+                let cardLayer = cardToLayerDictionary[card]!
+                cardLayer.frame = foundationLayers[0].frame
+                cardLayer.faceUp = solitaire.isCardFaceUp(card)
+                cardLayer.zPosition = z++
+            }
+        }
         
         let cardSize = stockLayer.bounds.size
         let fanOffset = FAN_OFFSET * cardSize.height
