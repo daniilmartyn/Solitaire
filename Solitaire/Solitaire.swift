@@ -118,6 +118,13 @@ class Solitaire {
             waste.removeAtIndex(waste.indexOf(card)!)
         }
         
+        for i in 0 ..< 4 {
+            if foundation[i].contains(card){
+                foundation[i].removeAtIndex(foundation[i].indexOf(card)!)
+                break
+            }
+        }
+        
         for i in 0 ..< 7 {
             if tableau[i].contains(card) {
                 tableau[i].removeAtIndex(tableau[i].indexOf(card)!)
@@ -133,11 +140,55 @@ class Solitaire {
     }
     
     func canDropCard(card : Card, onTableau i : Int) -> Bool {
+        
+        if tableau[i].isEmpty {
+            if card.rank == KING {
+                return true
+            } else {
+                return false
+            }
+        } else {
+        
+            let cardSuit = card.suit
+            let tableauSuit = tableau[i].last!.suit
+        
+            if ((cardSuit == .SPADES || cardSuit == .CLUBS)
+                && (tableauSuit == .DIAMONDS || tableauSuit == .HEARTS))
+            ||
+                ((cardSuit == .DIAMONDS || cardSuit == .HEARTS)
+                    && (tableauSuit == .CLUBS || tableauSuit == .SPADES)){
+                        if card.rank == tableau[i].last!.rank-1 {
+                            return true
+                        }
+            }
+        
+        }
+        
         return false
     }
     
     func didDropCard(card : Card, onTableau i : Int) {
+        if waste.contains(card) {
+            waste.removeAtIndex(waste.indexOf(card)!)
+        }
         
+        for i in 0 ..< 4 {
+            if foundation[i].contains(card) {
+                foundation[i].removeAtIndex(foundation[i].indexOf(card)!)
+            }
+        }
+        
+        for i in 0 ..< 7 {
+            if tableau[i].contains(card) {
+                tableau[i].removeAtIndex(tableau[i].indexOf(card)!)
+                if !tableau[i].isEmpty {
+                    faceUpCards.insert((tableau[i].last!))
+                }
+                break
+            }
+        }
+        
+        tableau[i].append(card)
     }
     
     func canFlipCard(card : Card) -> Bool {

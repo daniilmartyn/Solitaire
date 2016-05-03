@@ -184,7 +184,6 @@ class SolitaireView: UIView {
     }
     
     func dealCardsFromStockToWaste() {
-        NSLog("HEy, deal the card yo")
         if solitaire.canDealCard() {
             let card = solitaire.stock.last
             solitaire.didDealCard()
@@ -232,31 +231,60 @@ class SolitaireView: UIView {
         let hitTestPoint = self.layer.convertPoint(touchPoint, toLayer: self.layer.superlayer)
         let layer = self.layer.hitTest(hitTestPoint)
         
-        NSLog("hit layer \(layer?.name)")
-        
         if let layer = layer {
             if layer.name == "card" {
                 let cardLayer = layer as! CardLayer
                 let card = cardLayer.card
+                
                 if solitaire.isCardFaceUp(card) {
                     if touch.tapCount > 1 {
                         for i in 0 ..< 4 {
                             if solitaire.canDropCard(card, onFoundation: i){
                                 solitaire.didDropCard(card, onFoundation: i)
-                                CATransaction.begin()
-                                CATransaction.setDisableActions(true)
-                                cardLayer.zPosition = topZPosition + 1
-                                CATransaction.commit()
-                                cardLayer.position = foundationLayers[i].position
+                                draggingCardLayer = cardLayer
+                                dragCardsToPosition(foundationLayers[i].position, animate: true)
+                                draggingCardLayer = nil
+
                                 
                                 layoutSublayersOfLayer(self.layer)
                                 // maybe use flipCard() to animate card flipping...
                                 break
                             }
                         }
-                    }
+                    } else {
                     /// else initiate drag of card or stack of cards by setting draggingCardLayer,
                     /// and (possibly) draggingFan...
+                    
+                        
+                        //XXXXXXXX change the zPos thing when iimplementing fan cards
+                        
+                        cardLayer.zPosition = topZPosition + 1
+                        
+                        if solitaire.waste.last == card {
+                            touchStartPoint = touchPoint
+                            touchStartLayerPosition = layer.position
+                            draggingCardLayer = cardLayer
+                        }
+                        
+                        for i in 0 ..< 7 {
+                            if solitaire.tableau[i].last == card {
+                                touchStartPoint = touchPoint
+                                touchStartLayerPosition = layer.position
+                                draggingCardLayer = cardLayer
+                            } else {
+                                // check if it is a valid fan!
+                            }
+                        }
+                        
+                        for i in 0 ..< 4 {
+                            if solitaire.foundation[i].last == card {
+                                touchStartPoint = touchPoint
+                                touchStartLayerPosition = layer.position
+                                draggingCardLayer = cardLayer
+                            }
+                        }
+                    
+                    }
                 } else if solitaire.canFlipCard(card) {
                     flipCard(card, faceUp: true)  // update model and view
                 } else if solitaire.stock.last == card {
@@ -269,21 +297,59 @@ class SolitaireView: UIView {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       //
+        if let draggingCardLayer = draggingCardLayer {
+            let touch = touches.first
+            let touchPoint = touch?.locationInView(self)
+            let delta = CGPointMake(touchPoint!.x - touchStartPoint.x, touchPoint!.y - touchStartPoint.y)
+            let pos = CGPointMake(touchStartLayerPosition.x + delta.x, touchStartLayerPosition.y + delta.y)
+            dragCardsToPosition(pos, animate: false)
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let dragLayer = draggingCardLayer {
-            // if dragging only one card {
-                // .... determine where teh user is trying to drop the card
+             if draggingCardLayer != nil {
+                
+                for i in 0 ..< 4 {
+                    if CGRectIntersectsRect(draggingCardLayer!.frame, foundationLayers[i].frame) {
+                        if solitaire.canDropCard(draggingCardLayer!.card, onFoundation: i){
+                            solitaire.didDropCard(draggingCardLayer!.card, onFoundation: i)
+                            
+                            // maybe use flipCard() to animate card flipping...
+                            break
+                        }
+                    }
+                }
+                
+                for i in 0 ..< 7 {
+                    
+                    if solitaire.tableau[i].isEmpty {
+                        if CGRectIntersectsRect(draggingCardLayer!.frame, tableauLayers[i].frame) {
+                            if solitaire.canDropCard(draggingCardLayer!.card, onTableau: i) {
+                                solitaire.didDropCard(draggingCardLayer!.card, onTableau: i)
+                            }
+                        }
+                    }else {
+                        if let whereToDrop = cardToLayerDictionary[solitaire.tableau[i].last!]{
+                            if CGRectIntersectsRect(draggingCardLayer!.frame, whereToDrop.frame) {
+                                if solitaire.canDropCard(draggingCardLayer!.card, onTableau: i) {
+                                    solitaire.didDropCard(draggingCardLayer!.card, onTableau: i)
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+                
+                layoutSublayersOfLayer(self.layer)
                 // .... determine if this is a valid/legal drop
                     // if yes, update model and view
                     // if no, put card back from whence it came
-            // } else { // fan of cards (can only drop on tableau stack)
+             } else { // fan of cards (can only drop on tableau stack)
                 // determine if valid/legal drop
                     // if yes, update model and view
                     // if no, put cards back from whence they came
-            //}
+            }
             draggingCardLayer = nil
         }
     }
