@@ -8,7 +8,7 @@
 
 import UIKit
 
-var FAN_OFFSET : CGFloat = 0.0
+var FAN_OFFSET : CGFloat = 0.2
 
 class SolitaireView: UIView {
 
@@ -86,43 +86,56 @@ class SolitaireView: UIView {
         let width = bounds.size.width
         let height = bounds.size.height
         let portrait = width < height
-        var boarder : CGFloat
+        var m : CGFloat       // left/right between edges of screen and cards
+        var t : CGFloat         // top/bottom border
+        var d : CGFloat     // horizontal gap between cards
+        var s : CGFloat     // gap between tableau and foundation/stock/waste
+        
+        var w : CGFloat
+        var h : CGFloat
+        
+        let ratio : CGFloat = 215/150   // will be used to calculate height of card
         
         
         // XXXXXX SET UP BETTER margins/sizes based on height/width
         if portrait {
-            boarder = 8.0     // space between cards/layers
             FAN_OFFSET = 0.2
+            m = 8.0
+            t = 8.0
+            d = 4.0
+            s = 16.0
+            w = (width - 2*m - 6*d)/7
+            h = w*ratio
+            
             
         } else {
-            boarder = 16.0
-            FAN_OFFSET = 0.1
+            FAN_OFFSET = 0.15
+            m = 32.0
+            t = 8.0
+            s = 12.0
+            h = (height - 2*t - s)/4.7 //  2 full height + 2.7 worth of fanned cards
+            w = h / ratio
+            d = (width - 2*m - 7*w)/6
         }
-
-        let ratio : CGFloat = 215/150   // will be used to calculate height of card
-        
-        let w = (width - 8*boarder)/7
-        let h = w*ratio
-        
         
         stockLayer.bounds = CGRectMake(0, 0, w, h)
-        stockLayer.position = CGPointMake(boarder + w/2, boarder + h/2)
+        stockLayer.position = CGPointMake(m + w/2, t + h/2)
         
         wasteLayer.bounds = CGRectMake(0, 0, w, h)
-        wasteLayer.position = CGPointMake(2*boarder + w + w/2, boarder + h/2)
+        wasteLayer.position = CGPointMake(m + d + w + w/2, t + h/2)
         
         for i in 0 ..< 4 {
             foundationLayers[i].bounds = CGRectMake(0,0,w,h)
             foundationLayers[i].position = CGPointMake(
-                3*w + 4*boarder + w * CGFloat(i) + boarder * CGFloat(i) + w/2,
-                boarder + h/2)
+                3*w + m + 3*d + w * CGFloat(i) + d * CGFloat(i) + w/2,
+                t + h/2)
         }
         
         for i in 0 ..< 7 {
             tableauLayers[i].bounds = CGRectMake(0,0,w,h)
             tableauLayers[i].position = CGPointMake(
-                CGFloat(i)*w + boarder + boarder*CGFloat(i) + w/2,
-                2*boarder + h + h/2)
+                CGFloat(i)*w + m + d*CGFloat(i) + w/2,
+                t + s + h + h/2)
         }
         
         layoutCards()
