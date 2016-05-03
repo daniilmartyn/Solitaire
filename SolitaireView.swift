@@ -179,14 +179,31 @@ class SolitaireView: UIView {
     
     func flipCard(card : Card, faceUp : Bool) {
         // implement this!!!! TODO
+        
+        // wait... i get it... maybe
     }
     
     func dealCardsFromStockToWaste() {
-        // another thing to implement !!! WAAAAAAAH
+        NSLog("HEy, deal the card yo")
+        if solitaire.canDealCard() {
+            let card = solitaire.stock.last
+            solitaire.didDealCard()
+            
+            let cardLayer = cardToLayerDictionary[card!]
+            
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            cardLayer!.zPosition = topZPosition + 1
+            CATransaction.commit()
+            cardLayer!.position = wasteLayer.position
+            
+            layoutSublayersOfLayer(self.layer)      // XXXXXX Again... change this later perhaps
+        }
     }
     
     func collectWasteCardsIntoStock() {
-        // yet another thing to dooo!sladf ;asdlfj
+        solitaire.collectWasteCardsIntoStock()
+        layoutSublayersOfLayer(self.layer)
     }
     
     func dragCardsToPosition(position : CGPoint, animate : Bool) {
@@ -215,6 +232,8 @@ class SolitaireView: UIView {
         let hitTestPoint = self.layer.convertPoint(touchPoint, toLayer: self.layer.superlayer)
         let layer = self.layer.hitTest(hitTestPoint)
         
+        NSLog("hit layer \(layer?.name)")
+        
         if let layer = layer {
             if layer.name == "card" {
                 let cardLayer = layer as! CardLayer
@@ -231,6 +250,7 @@ class SolitaireView: UIView {
                                 cardLayer.position = foundationLayers[i].position
                                 
                                 layoutSublayersOfLayer(self.layer)
+                                // maybe use flipCard() to animate card flipping...
                                 break
                             }
                         }
@@ -249,7 +269,7 @@ class SolitaireView: UIView {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       // <#code#>
+       //
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {

@@ -141,10 +141,9 @@ class Solitaire {
     }
     
     func canFlipCard(card : Card) -> Bool {
-        if card == stock.last {
-            return true
-        }
-        
+       // if card == stock.last {
+       //     return true
+        //}
         
         return false
     }
@@ -154,16 +153,25 @@ class Solitaire {
     }
     
     func canDealCard() -> Bool {
-        return false
+        if stock.isEmpty {
+            return false
+        }
+        return true
     }
     
     func didDealCard() {
-        
+        let card = stock.last
+        stock.removeLast()
+        waste.append(card!)
+        faceUpCards.insert(card!)
     }
     
     func collectWasteCardsIntoStock() {
-        
+        while !waste.isEmpty {
+            let card = waste.last
+            waste.removeLast()
+            stock.append(card!)
+            faceUpCards.remove(card!)
+        }
     }
-    
-    
 }
