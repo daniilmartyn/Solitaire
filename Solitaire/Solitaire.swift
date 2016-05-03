@@ -98,7 +98,46 @@ class Solitaire {
     }
     
     func fanBeginningWithCard(card : Card) -> [Card]? {
-        return nil
+        
+        var cards : [Card] = []
+        var done : Bool = false
+        
+        for i in 0 ..< 7 {
+            for j in 0 ..< tableau[i].count {
+                if tableau[i][j] == card {
+                    for k in j ..< tableau[i].count {
+                        cards.append(tableau[i][k])
+                    }
+                    done = true
+                    break
+                }
+            }
+            if done {
+                break
+            }
+        }
+        
+        
+        for i in 1 ..< cards.count {
+            if cards[i].rank != cards[i-1].rank-1 {
+                return nil
+            }
+            
+            let currentCardSuit = cards[i].suit
+            let prevCardSuit = cards[i-1].suit
+            
+            if ((currentCardSuit == .SPADES || currentCardSuit == .CLUBS)
+                && (prevCardSuit == .DIAMONDS || prevCardSuit == .HEARTS))
+                ||
+                ((currentCardSuit == .DIAMONDS || currentCardSuit == .HEARTS)
+                    && (prevCardSuit == .CLUBS || prevCardSuit == .SPADES)){
+                        continue
+            } else {
+                return nil
+            }
+        }
+        
+        return cards
     }
     
     func canDropCard(card : Card, onFoundation i : Int) -> Bool {
@@ -189,6 +228,55 @@ class Solitaire {
         }
         
         tableau[i].append(card)
+    }
+    
+    func canDropFan( cards : [Card], onTableau i : Int) -> Bool {
+        
+        if tableau[i].isEmpty {
+            if cards.first!.rank == KING {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            
+            let cardSuit = cards.first!.suit
+            let tableauSuit = tableau[i].last!.suit
+            
+            if ((cardSuit == .SPADES || cardSuit == .CLUBS)
+                && (tableauSuit == .DIAMONDS || tableauSuit == .HEARTS))
+                ||
+                ((cardSuit == .DIAMONDS || cardSuit == .HEARTS)
+                    && (tableauSuit == .CLUBS || tableauSuit == .SPADES)){
+                        if cards.first!.rank == tableau[i].last!.rank-1 {
+                            return true
+                        }
+            }
+            
+        }
+        
+        return false
+    }
+    
+    func didDropFan(cards : [Card], onTableau i : Int) {
+        
+        var fromWhere : Int = -1
+        
+        for j in 0 ..< 7 {
+            if tableau[j].contains(cards.first!) {
+                fromWhere = j
+            }
+        }
+        
+        for card in cards {
+            tableau[fromWhere].removeAtIndex(tableau[fromWhere].indexOf(card)!)
+            tableau[i].append(card)
+        }
+        
+        if !tableau[fromWhere].isEmpty {
+            faceUpCards.insert(tableau[fromWhere].last!)
+        }
+        
     }
     
     func canFlipCard(card : Card) -> Bool {
