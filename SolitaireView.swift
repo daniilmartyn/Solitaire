@@ -94,10 +94,8 @@ class SolitaireView: UIView {
         var w : CGFloat
         var h : CGFloat
         
-        let ratio : CGFloat = 215/150   // will be used to calculate height of card
+        let ratio : CGFloat = 215/150   // will be used to calculate height/width of card
         
-        
-        // XXXXXX SET UP BETTER margins/sizes based on height/width
         if portrait {
             FAN_OFFSET = 0.2
             m = 8.0
@@ -110,7 +108,7 @@ class SolitaireView: UIView {
             
         } else {
             FAN_OFFSET = 0.15
-            m = 32.0
+            m = 64.0
             t = 8.0
             s = 12.0
             h = (height - 2*t - s)/4.7 //  2 full height + 2.7 worth of fanned cards
@@ -261,7 +259,7 @@ class SolitaireView: UIView {
                                 draggingCardLayer = nil
 
                                 if solitaire.gameWon() {
-                                    NSLog("YOU DID IT")
+                                    party()
                                 }
                                 layoutSublayersOfLayer(self.layer)
                                 // maybe use flipCard() to animate card flipping...
@@ -343,7 +341,7 @@ class SolitaireView: UIView {
                             solitaire.didDropCard(draggingCardLayer!.card, onFoundation: i)
                             
                             if solitaire.gameWon() {
-                                NSLog("YOU DID IT!")
+                                party()
                             }
                             // maybe use flipCard() to animate card flipping...
                             break
@@ -408,14 +406,21 @@ class SolitaireView: UIView {
     }
 
 
-
-
-
-
-
-
-
-
-
+    func party() {
+        
+        //  accessing alertController from UIView method by Zev Eisenberg
+        // http://stackoverflow.com/questions/26554894/how-to-present-uialertcontroller-when-not-in-a-view-controller
+        
+        let alert = UIAlertController(title: "YOU WON!", message: "Congrats!", preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: "Play Again?", style: UIAlertActionStyle.Default, handler:
+            {(UIAlertAction) -> Void in
+            self.solitaire.freshGame()
+            self.layoutSublayersOfLayer(self.layer)}))
+        
+        UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        
+        
+    }
 
 }
