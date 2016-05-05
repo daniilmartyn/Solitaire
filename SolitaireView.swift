@@ -25,6 +25,8 @@ class SolitaireView: UIView {
     var touchStartPoint: CGPoint = CGPointZero
     var touchStartLayerPosition : CGPoint = CGPointZero
     
+    var isWin : Bool = false
+    
     lazy var solitaire : Solitaire! = { // reference to model in app delegate
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         return appDelegate.solitaire
@@ -83,6 +85,12 @@ class SolitaireView: UIView {
     }
     
     func layoutTableAndCards() {
+        
+        if isWin {
+            party()
+            return
+        }
+        
         let width = bounds.size.width
         let height = bounds.size.height
         let portrait = width < height
@@ -406,8 +414,36 @@ class SolitaireView: UIView {
     }
 
 
-    func party() {
+    func fanCards() {
+        let radius = 0.35*max(bounds.width/2, bounds.height/2)
+        let theta0 : CGFloat = CGFloat(M_PI)
+        let theta1 : CGFloat = 0.0
+        let dtheta = (theta1 - theta0)/51
         
+        let deck = Card.deck()
+        
+        for i in 0 ..< 50 {
+            let clayer = cardToLayerDictionary[deck[i]]
+            let theta = theta0 + CGFloat(i)*dtheta
+            let x : CGFloat = center.x - radius*cos(theta)
+            let y : CGFloat = center.y + radius*sin(theta)
+            clayer!.position = CGPointMake(x, y)
+            clayer!.zPosition = topZPosition++
+            clayer!.transform = CATransform3DRotate(CATransform3DIdentity, CGFloat(M_PI_2) - theta, 0, 0, 1)
+        }
+    }
+    
+    func resetLayers() {
+        let deck = Card.deck()
+        
+        for i in 0 ..< 52 {
+            let clayer = cardToLayerDictionary[deck[i]]
+            clayer!.zPosition = topZPosition++
+            clayer!.transform = CATransform3DIdentity
+        }
+    }
+    
+    func playAgain() {
         //  accessing alertController from UIView method by Zev Eisenberg
         // http://stackoverflow.com/questions/26554894/how-to-present-uialertcontroller-when-not-in-a-view-controller
         
@@ -415,11 +451,42 @@ class SolitaireView: UIView {
         
         alert.addAction(UIAlertAction(title: "Play Again?", style: UIAlertActionStyle.Default, handler:
             {(UIAlertAction) -> Void in
-            self.solitaire.freshGame()
-            self.layoutSublayersOfLayer(self.layer)}))
+                self.solitaire.freshGame()
+                self.isWin = false
+                self.resetLayers()
+                self.layoutSublayersOfLayer(self.layer)}))
         
         UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func party() {
         
+        isWin = true
+        
+        let width = bounds.size.width
+        let height = bounds.size.height
+        
+        let deck = Card.deck()
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        let clayer = cardToLayerDictionary[deck[50]]
+        let x : CGFloat = width/5 * 2
+        let y : CGFloat = height/3
+        clayer!.position = CGPointMake(x, y)
+        clayer!.zPosition = topZPosition++
+
+        let clayer2 = cardToLayerDictionary[deck[51]]
+        let x2 : CGFloat = width/5 * 3
+        let y2 : CGFloat = height/3
+        clayer2!.position = CGPointMake(x2, y2)
+        clayer2!.zPosition = topZPosition++
+        CATransaction.commit()
+        
+        
+        fanCards()
+        
+        playAgain()
         
     }
 
