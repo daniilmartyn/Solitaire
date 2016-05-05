@@ -1,2 +1,9 @@
-*Z'v)J‰bµ¨«zÊ%ŠÖ¢­êg‚*Zvšèjš|ß©áŠÈ¬jÈ¦¦WŠ–‰İŠG’¢X­‰ªŞ©¶­ŠÇ(š–­‰¹^Â+aj|¢9'^¾'û^®›¥–)à¢·%¢x§‚Ø^‚+kzš,ŠÚ+ÊØ^¦º#yËl†‹¥u·šnW­¡·«ºx§jxJÈ¦ºV­¢º~‡ñ
-‡^¢¸­q©Ûz)ìµ©eyÚ'j|¢9'^¾'²ç!jÆ§ˆøhê+ˆö‚+ŞØZ¶Ø^ºÇ«…«–[az·ªº*ŞuÇ«¶'âq«^±©İ¥êæŠË"¢{
+![Klondike Solitaire](Solitaire/Assets.xcassets/AppIcon.appiconset/solitaire.png-ipad-pro-app-83.5-2.png)
+
+## Description
+
+This is a simple Klondike Solitaire game that is compatible with any iOS device.
+After pulling or cloning this git repository, the project should be able to be run
+on an iOS simulator off of xCode. The game should also be able to be installed on
+any iOS device, such as an iPhone or iPad, given that the user has proper developer
+certificates from Apple.
