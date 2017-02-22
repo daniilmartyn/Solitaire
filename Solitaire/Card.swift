@@ -9,10 +9,10 @@
 import Foundation
 
 enum Suit : UInt8 {
-    case SPADES = 0
-    case CLUBS = 1
-    case DIAMONDS = 2
-    case HEARTS = 3
+    case spades = 0
+    case clubs = 1
+    case diamonds = 2
+    case hearts = 3
 }
 
 let ACE : UInt8 = 1
@@ -46,13 +46,13 @@ struct Card : Hashable {
                 
                 switch suit {
                 case 0:
-                    newCard = Card(suit: .SPADES, rank: UInt8(rank))
+                    newCard = Card(suit: .spades, rank: UInt8(rank))
                 case 1:
-                    newCard = Card(suit: .CLUBS, rank: UInt8(rank))
+                    newCard = Card(suit: .clubs, rank: UInt8(rank))
                 case 2:
-                    newCard = Card(suit: .DIAMONDS, rank: UInt8(rank))
+                    newCard = Card(suit: .diamonds, rank: UInt8(rank))
                 case 3:
-                    newCard = Card(suit: .HEARTS, rank: UInt8(rank))
+                    newCard = Card(suit: .hearts, rank: UInt8(rank))
                 default:
                     break;
                 }
