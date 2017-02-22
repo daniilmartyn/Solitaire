@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     lazy var solitaire : Solitaire! = { // reference to model in app delegate
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.solitaire
     }()
     
@@ -29,9 +29,9 @@ class ViewController: UIViewController {
     }
 
 
-    @IBAction func NewGame(sender: AnyObject) {
+    @IBAction func NewGame(_ sender: AnyObject) {
         solitaire.freshGame()
-        self.solitaireTable.layoutSublayersOfLayer(solitaireTable.layer)
+        self.solitaireTable.layoutSublayers(of:solitaireTable.layer)
     }
 }
 

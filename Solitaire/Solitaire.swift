@@ -15,7 +15,7 @@ class Solitaire {
     var foundation : [[Card]]   // Array of 4 card stacks
     var tableau : [[Card]]      // Array of 7 card stacks
     
-    private var faceUpCards : Set<Card>;
+    fileprivate var faceUpCards : Set<Card>;
     
     
     init(){
@@ -89,7 +89,7 @@ class Solitaire {
         }
     }
     
-    func isCardFaceUp(card : Card) -> Bool {
+    func isCardFaceUp(_ card : Card) -> Bool {
         if faceUpCards.contains(card) {
             return true
         } else {
@@ -97,7 +97,7 @@ class Solitaire {
         }
     }
     
-    func fanBeginningWithCard(card : Card) -> [Card]? {
+    func fanBeginningWithCard(_ card : Card) -> [Card]? {
         
         var cards : [Card] = []
         var done : Bool = false
@@ -126,11 +126,11 @@ class Solitaire {
             let currentCardSuit = cards[i].suit
             let prevCardSuit = cards[i-1].suit
             
-            if ((currentCardSuit == .SPADES || currentCardSuit == .CLUBS)
-                && (prevCardSuit == .DIAMONDS || prevCardSuit == .HEARTS))
+            if ((currentCardSuit == .spades || currentCardSuit == .clubs)
+                && (prevCardSuit == .diamonds || prevCardSuit == .hearts))
                 ||
-                ((currentCardSuit == .DIAMONDS || currentCardSuit == .HEARTS)
-                    && (prevCardSuit == .CLUBS || prevCardSuit == .SPADES)){
+                ((currentCardSuit == .diamonds || currentCardSuit == .hearts)
+                    && (prevCardSuit == .clubs || prevCardSuit == .spades)){
                         continue
             } else {
                 return nil
@@ -140,7 +140,7 @@ class Solitaire {
         return cards
     }
     
-    func canDropCard(card : Card, onFoundation i : Int) -> Bool {
+    func canDropCard(_ card : Card, onFoundation i : Int) -> Bool {
         
         if foundation[i].isEmpty && card.rank == ACE {
             return true
@@ -152,21 +152,21 @@ class Solitaire {
         
     }
     
-    func didDropCard(card: Card, onFoundation i : Int) {
+    func didDropCard(_ card: Card, onFoundation i : Int) {
         if waste.contains(card) {
-            waste.removeAtIndex(waste.indexOf(card)!)
+            waste.remove(at: waste.index(of: card)!)
         }
         
         for i in 0 ..< 4 {
             if foundation[i].contains(card){
-                foundation[i].removeAtIndex(foundation[i].indexOf(card)!)
+                foundation[i].remove(at: foundation[i].index(of: card)!)
                 break
             }
         }
         
         for i in 0 ..< 7 {
             if tableau[i].contains(card) {
-                tableau[i].removeAtIndex(tableau[i].indexOf(card)!)
+                tableau[i].remove(at: tableau[i].index(of: card)!)
                 if !tableau[i].isEmpty{
                     faceUpCards.insert(tableau[i].last!)
                 }
@@ -178,7 +178,7 @@ class Solitaire {
         foundation[i].append(card)
     }
     
-    func canDropCard(card : Card, onTableau i : Int) -> Bool {
+    func canDropCard(_ card : Card, onTableau i : Int) -> Bool {
         
         if tableau[i].isEmpty {
             if card.rank == KING {
@@ -191,11 +191,11 @@ class Solitaire {
             let cardSuit = card.suit
             let tableauSuit = tableau[i].last!.suit
         
-            if ((cardSuit == .SPADES || cardSuit == .CLUBS)
-                && (tableauSuit == .DIAMONDS || tableauSuit == .HEARTS))
+            if ((cardSuit == .spades || cardSuit == .clubs)
+                && (tableauSuit == .diamonds || tableauSuit == .hearts))
             ||
-                ((cardSuit == .DIAMONDS || cardSuit == .HEARTS)
-                    && (tableauSuit == .CLUBS || tableauSuit == .SPADES)){
+                ((cardSuit == .diamonds || cardSuit == .hearts)
+                    && (tableauSuit == .clubs || tableauSuit == .spades)){
                         if card.rank == tableau[i].last!.rank-1 {
                             return true
                         }
@@ -206,20 +206,20 @@ class Solitaire {
         return false
     }
     
-    func didDropCard(card : Card, onTableau i : Int) {
+    func didDropCard(_ card : Card, onTableau i : Int) {
         if waste.contains(card) {
-            waste.removeAtIndex(waste.indexOf(card)!)
+            waste.remove(at: waste.index(of: card)!)
         }
         
         for i in 0 ..< 4 {
             if foundation[i].contains(card) {
-                foundation[i].removeAtIndex(foundation[i].indexOf(card)!)
+                foundation[i].remove(at: foundation[i].index(of: card)!)
             }
         }
         
         for i in 0 ..< 7 {
             if tableau[i].contains(card) {
-                tableau[i].removeAtIndex(tableau[i].indexOf(card)!)
+                tableau[i].remove(at: tableau[i].index(of: card)!)
                 if !tableau[i].isEmpty {
                     faceUpCards.insert((tableau[i].last!))
                 }
@@ -230,7 +230,7 @@ class Solitaire {
         tableau[i].append(card)
     }
     
-    func canDropFan( cards : [Card], onTableau i : Int) -> Bool {
+    func canDropFan( _ cards : [Card], onTableau i : Int) -> Bool {
         
         if tableau[i].isEmpty {
             if cards.first!.rank == KING {
@@ -243,11 +243,11 @@ class Solitaire {
             let cardSuit = cards.first!.suit
             let tableauSuit = tableau[i].last!.suit
             
-            if ((cardSuit == .SPADES || cardSuit == .CLUBS)
-                && (tableauSuit == .DIAMONDS || tableauSuit == .HEARTS))
+            if ((cardSuit == .spades || cardSuit == .clubs)
+                && (tableauSuit == .diamonds || tableauSuit == .hearts))
                 ||
-                ((cardSuit == .DIAMONDS || cardSuit == .HEARTS)
-                    && (tableauSuit == .CLUBS || tableauSuit == .SPADES)){
+                ((cardSuit == .diamonds || cardSuit == .hearts)
+                    && (tableauSuit == .clubs || tableauSuit == .spades)){
                         if cards.first!.rank == tableau[i].last!.rank-1 {
                             return true
                         }
@@ -258,7 +258,7 @@ class Solitaire {
         return false
     }
     
-    func didDropFan(cards : [Card], onTableau i : Int) {
+    func didDropFan(_ cards : [Card], onTableau i : Int) {
         
         var fromWhere : Int = -1
         
@@ -269,7 +269,7 @@ class Solitaire {
         }
         
         for card in cards {
-            tableau[fromWhere].removeAtIndex(tableau[fromWhere].indexOf(card)!)
+            tableau[fromWhere].remove(at: tableau[fromWhere].index(of: card)!)
             tableau[i].append(card)
         }
         
@@ -279,7 +279,7 @@ class Solitaire {
         
     }
     
-    func canFlipCard(card : Card) -> Bool {
+    func canFlipCard(_ card : Card) -> Bool {
        // if card == stock.last {
        //     return true
         //}
@@ -287,7 +287,7 @@ class Solitaire {
         return false
     }
     
-    func didFlipCard(card : Card) {
+    func didFlipCard(_ card : Card) {
         
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-func imageForCard(card : Card) -> UIImage {
+func imageForCard(_ card : Card) -> UIImage {
     
     let suits = ["spades", "clubs", "diamonds", "hearts"]
     let ranks = [
@@ -30,7 +30,7 @@ class CardLayer: CALayer {
         didSet {
             if faceUp != oldValue {
                 let image = faceUp ? frontImage : CardLayer.backImage
-                self.contents = image?.CGImage
+                self.contents = image?.cgImage
             }
         }
     }
@@ -42,18 +42,18 @@ class CardLayer: CALayer {
         faceUp = true
         frontImage = imageForCard(card)
         super.init()
-        self.contents = frontImage.CGImage
+        self.contents = frontImage.cgImage
         self.contentsGravity = kCAGravityResizeAspect
     }
 
-    override init(layer: AnyObject) {
-        self.card = Card(suit: .SPADES, rank: 2)
+    override init(layer: Any) {
+        self.card = Card(suit: .spades, rank: 2)
         self.faceUp = false
         self.frontImage = UIImage()
         super.init(layer: layer)
     }
     required init?(coder aDecoder: NSCoder) {
-        self.card = Card(suit: .SPADES, rank: 2)
+        self.card = Card(suit: .spades, rank: 2)
         self.faceUp = false
         self.frontImage = UIImage()
         super.init(coder: aDecoder)
