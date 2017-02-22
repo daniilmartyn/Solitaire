@@ -414,15 +414,14 @@ class SolitaireView: UIView {
                                     }
                                 
                             } else {
-                                if let whereToDrop = cardToLayerDictionary[solitaire.tableau[i].last!]{
-                                        if solitaire.canDropCard(draggingCardLayer!.card, onTableau: i) {
-                                            solitaire.didDropCard(draggingCardLayer!.card, onTableau: i)
-                                            draggingCardLayer = cardLayer
-                                            dragCardsToPosition(tableauLayers[i].position, animate: true)
-                                            draggingCardLayer = nil
-                                            break
-                                        }
+                                if solitaire.canDropCard(draggingCardLayer!.card, onTableau: i) {
+                                    solitaire.didDropCard(draggingCardLayer!.card, onTableau: i)
+                                    draggingCardLayer = cardLayer
+                                    dragCardsToPosition(tableauLayers[i].position, animate: true)
+                                    draggingCardLayer = nil
+                                    break
                                 }
+                                
                             }
                         }
                     }
@@ -459,24 +458,16 @@ class SolitaireView: UIView {
                 }
                 if !intended {
                     for i in 0 ..< 7 {
-                        
                         if solitaire.tableau[i].isEmpty {
-                            if let firstCardFanLayer = cardToLayerDictionary[draggingFan!.first!]{
-                                    if solitaire.canDropFan(draggingFan!, onTableau: i) {
-                                        solitaire.didDropFan(draggingFan!, onTableau: i)
-                                        break
-                                    }
-                                
+                            if solitaire.canDropFan(draggingFan!, onTableau: i) {
+                                solitaire.didDropFan(draggingFan!, onTableau: i)
+                                break
                             }
+                            
                         } else {
-                            if let whereToDrop = cardToLayerDictionary[solitaire.tableau[i].last!]{
-                                if let firstCardFanLayer = cardToLayerDictionary[draggingFan!.first!]{
-                                        if solitaire.canDropFan(draggingFan!, onTableau: i) {
-                                            solitaire.didDropFan(draggingFan!, onTableau: i)
-                                            break
-                                        }
-                                    
-                                }
+                            if solitaire.canDropFan(draggingFan!, onTableau: i) {
+                                solitaire.didDropFan(draggingFan!, onTableau: i)
+                                break
                             }
                         }
                     }
